@@ -1,5 +1,3 @@
-
-
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -14,18 +12,75 @@ export default function BrandPortfolioPage() {
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Handle scroll animations
   useEffect(() => {
+    let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+
     const handleScroll = () => {
       setIsScrolling(true);
-      clearTimeout(window.scrollTimer);
-      window.scrollTimer = setTimeout(() => setIsScrolling(false), 100);
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => setIsScrolling(false), 100);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({ success: true, message: data.message });
+        setFormData({ name: "", email: "", message: "" }); // Reset form
+      } else {
+        setSubmitStatus({
+          success: false,
+          message: data.message || "Error sending message",
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        success: false,
+        message: "Network error. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
 
   // Close mobile menu when clicking on nav items
   const handleNavClick = (id: string) => {
@@ -76,63 +131,63 @@ export default function BrandPortfolioPage() {
       title: "Bloom Cosmetics Rebrand",
       description: "Complete brand identity refresh",
       category: "Branding",
-      imageUrl: "/cosmetics-brand.jpg",
+      imageUrl: "/images/cosmetics-brand.jpg",
     },
     {
       id: 2,
       title: "Organic Tea Packaging",
       description: "Sustainable packaging design",
       category: "Packaging",
-      imageUrl: "/tea-packaging.jpg",
+      imageUrl: "/images/tea-packaging.jpg",
     },
     {
       id: 3,
       title: "Tech Startup Website",
       description: "Modern web design & development",
       category: "Digital",
-      imageUrl: "/tech-website.jpg",
+      imageUrl: "/images/tech-website.jpg",
     },
     {
       id: 4,
       title: "Coffee Brand Identity",
       description: "From logo to packaging system",
       category: "Branding",
-      imageUrl: "/coffee-branding.jpg",
+      imageUrl: "/images/coffee-branding.jpg",
     },
     {
       id: 5,
       title: "Fashion Lookbook",
       description: "Editorial design & photography",
       category: "Print",
-      imageUrl: "/fashion-lookbook.jpg",
+      imageUrl: "/images/fashion-lookbook.jpg",
     },
     {
       id: 6,
       title: "Restaurant Menu Design",
       description: "Culinary branding experience",
       category: "Print",
-      imageUrl: "/restaurant-menu.jpg",
+      imageUrl: "/images/restaurant-menu.jpg",
     },
     {
       id: 7,
       title: "Mobile Banking App",
       description: "UI/UX design for fintech",
       category: "Digital",
-      imageUrl: "/mobile-app.jpg",
+      imageUrl: "/images/mobile-app.jpg",
     },
     {
       id: 8,
       title: "Wine Label Collection",
       description: "Premium packaging design",
       category: "Packaging",
-      imageUrl: "/wine-labels.jpg",
+      imageUrl: "/images/wine-labels.jpg",
     },
     {
       id: 9,
       title: "Corporate Brand System",
       description: "Complete visual identity",
       category: "Branding",
-      imageUrl: "/corporate-brand.jpg",
+      imageUrl: "/images/corporate-brand.jpg",
     },
   ];
 
@@ -163,6 +218,10 @@ export default function BrandPortfolioPage() {
       avatar: "/avat",
     },
   ];
+
+  const filteredItems = selectedCategory === "All"
+    ? portfolioItems
+    : portfolioItems.filter(item => item.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-[#e4e4d1] text-[#1a1a1a]">
@@ -206,8 +265,8 @@ export default function BrandPortfolioPage() {
       <nav
         className={`fixed top-0 w-full z-50 py-4 px-6 transition-all duration-300 ${
           isScrolling
-            ? "bg-black/20 backdrop-blur-sm shadow-sm"
-            : "bg-[#e4e4d1]/80 backdrop-blur-lg"
+            ? "bg-black/20 backdrop-blur-sm shadow-lg border-b border-gray-100"
+            : "bg-[#e4e4d1]/80 backdrop-blur-lg border-b border-gray-100"
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -217,7 +276,7 @@ export default function BrandPortfolioPage() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2"
           >
-            <Image src="/logo.png" alt="Logo" height={40} width={40} />
+            <Image src="/images/logo.png" alt="Logo" height={40} width={40} />
             <span className="font-bold text-xl tracking-tight">
               New Heights
             </span>
@@ -234,8 +293,6 @@ export default function BrandPortfolioPage() {
                     ? "text-[#e4c444] underline underline-offset-4 decoration-2"
                     : "text-gray-700 hover:text-gray-900"
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 {item.label}
               </motion.button>
@@ -320,11 +377,11 @@ export default function BrandPortfolioPage() {
             <div className="absolute inset-0 rounded-full blur-xl opacity-10 animate-pulse"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="New Heights Logo"
                 width={300}
                 height={300}
-                className="w-40 h-40 sm:w-48 sm:h-48 md:w-70 md:h-56"
+                // className="w-40 h-40 sm:w-48 sm:h-48 md:w-70 md:h-56"
               />
             </div>
           </motion.div>
@@ -358,8 +415,6 @@ export default function BrandPortfolioPage() {
         >
           <motion.button
             onClick={animateToContact}
-            whileHover={{ scale: 1.05, backgroundColor: "#000000" }}
-            whileTap={{ scale: 0.95 }}
             className="inline-block rounded-full bg-black text-white font-bold px-6 py-2 sm:px-8 sm:py-3 shadow-lg text-base sm:text-lg"
           >
             Get in Touch
@@ -370,7 +425,6 @@ export default function BrandPortfolioPage() {
               portfolioRef.current?.scrollIntoView({ behavior: "smooth" });
             }}
             className="text-gray-600 hover:text-gray-900 font-medium flex items-center gap-2 text-sm sm:text-base"
-            whileHover={{ y: -3 }}
           >
             Explore our work
             <svg
@@ -420,10 +474,11 @@ export default function BrandPortfolioPage() {
                   <button
                     key={category}
                     className={`px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
-                      category === "All"
+                      category === selectedCategory
                         ? "bg-black text-white"
                         : "hover:bg-black/10"
                     }`}
+                    onClick={() => setSelectedCategory(category)}
                   >
                     {category}
                   </button>
@@ -434,7 +489,7 @@ export default function BrandPortfolioPage() {
 
           {/* Portfolio Gallery */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolioItems.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -648,12 +703,12 @@ export default function BrandPortfolioPage() {
               Let's Elevate Your Brand
             </motion.h2>
 
-            <form className="flex flex-col gap-4 sm:gap-6">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4 sm:gap-6"
+            >
+              {/* Name Field */}
+              <div>
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium mb-1 sm:mb-2"
@@ -663,16 +718,17 @@ export default function BrandPortfolioPage() {
                 <input
                   type="text"
                   id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full p-2 sm:p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#e4e444] text-sm sm:text-base"
                   placeholder="John Doe"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-              >
+              {/* Email Field */}
+              <div>
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium mb-1 sm:mb-2"
@@ -682,16 +738,17 @@ export default function BrandPortfolioPage() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full p-2 sm:p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#e4e444] text-sm sm:text-base"
                   placeholder="john@example.com"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-              >
+              {/* Message Field */}
+              <div>
                 <label
                   htmlFor="message"
                   className="block text-sm font-medium mb-1 sm:mb-2"
@@ -700,24 +757,41 @@ export default function BrandPortfolioPage() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                   className="w-full p-2 sm:p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#e4e444] text-sm sm:text-base"
                   placeholder="Tell us about your project..."
                 ></textarea>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, type: "spring" }}
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-2 sm:py-3 bg-black text-white font-bold rounded-lg transition-colors text-sm sm:text-base ${
+                  isSubmitting
+                    ? "opacity-70 cursor-not-allowed"
+                    : "hover:bg-gray-800"
+                }`}
               >
-                <button
-                  type="submit"
-                  className="w-full py-2 sm:py-3 bg-black text-white font-bold rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base"
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </button>
+
+              {/* Status Message */}
+              {submitStatus && (
+                <div
+                  className={`p-3 rounded-lg text-sm ${
+                    submitStatus.success
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
                 >
-                  Send Message
-                </button>
-              </motion.div>
+                  {submitStatus.message}
+                </div>
+              )}
             </form>
 
             <motion.div
@@ -730,7 +804,7 @@ export default function BrandPortfolioPage() {
                 Prefer to talk directly?
               </p>
               <p className="font-bold text-base sm:text-lg">
-                info@newheightsbrands.com
+                new.heights@gmail.com
               </p>
               <p className="font-bold text-base sm:text-lg">+2547 0706 9007</p>
             </motion.div>
@@ -740,30 +814,106 @@ export default function BrandPortfolioPage() {
 
       {/* Footer */}
       <footer className="py-8 sm:py-12 px-4 sm:px-6 bg-black text-white">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10  rounded-full flex items-center justify-center">
-              <Image src="/logo.png" alt="Logo" height={40} width={40} />
-             
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            {/* Branding */}
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center">
+                  <Image src="/images/logo.png" alt="Logo" width={40} height={40} />
+                </div>
+                <span className="font-bold text-lg">New Heights</span>
+              </div>
+              <p className="text-gray-400 text-sm text-center md:text-left max-w-md">
+                Elevating brands to new heights through creativity and strategy
+              </p>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex flex-col items-center md:items-end gap-4">
+              <div className="flex gap-4">
+                {[
+                  {
+                    name: "Twitter",
+                    url: "https://twitter.com/mtuhalf",
+                    icon: (
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "Instagram",
+                    url: "https://instagram.com/tpharmacy001",
+                    icon: (
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "LinkedIn",
+                    url: "https://linkedin.com/company/#",
+                    icon: (
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "Dribbble",
+                    url: "https://dribbble.com/#",
+                    icon: (
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.395-6.87zM12 2.163C6.663 2.163 2.163 6.663 2.163 12c0 .975.183 1.92.51 2.81.204.547.713.786 1.14.616 2.16-.67 6.527-2.14 9.336-2.142 2.54-.003 5.708.78 7.44 1.38.34.126.708-.04.822-.36.207-.586.293-1.225.293-1.83 0-5.337-4.337-9.673-9.673-9.673zm-3.71 17.613c-.24 0-.476-.12-.616-.317-.928-1.27-1.66-3.225-1.987-5.402-.36-2.387-.44-5.825.042-7.776.11-.44.584-.68 1.01-.545 3.203.89 6.82 3.14 8.208 3.8.43.18.6.69.39 1.09-.99 1.83-3.438 5.01-6.897 7.02-.17.08-.35.13-.53.13zm-3.93-7.525c-.172 0-.34-.09-.428-.248-.144-.25-.107-.57.086-.77.987-.99 3.13-2.57 5.062-3.12.34-.1.71.04.83.36.12.32-.03.69-.35.81-1.66.53-3.64 1.99-4.52 2.96-.07.07-.15.11-.23.11z" />
+                      </svg>
+                    ),
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-[#e4e444] transition-colors"
+                    aria-label={social.name}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+
+              {/* Contact Info */}
+              <div className="text-center md:text-right">
+                <p className="text-gray-400 text-sm">new.heights@gmail.com</p>
+                <p className="text-gray-400 text-sm">+2547 0706 9007</p>
+              </div>
             </div>
           </div>
-          <p className="mb-3 sm:mb-4 text-sm sm:text-base">
-            Elevating brands to new heights through creativity and strategy
-          </p>
-          <div className="flex justify-center gap-4 sm:gap-6 sm:mb-6">
-            {["Twitter", "Instagram", "LinkedIn", "Dribbble"].map(
-              (platform) => (
-                <a
-                  key={platform}
-                  href="#"
-                  className="text-gray-400 hover:text-[#e4e444] transition-colors text-sm sm:text-base"
-                >
-                  {platform}
-                </a>
-              )
-            )}
-          </div>
-          
+
+          {/* Copyright */}
+          {/* <div className="mt-8 pt-8 border-t border-gray-800 text-center">
+            <p className="text-gray-500 text-sm">
+              &copy; {new Date().getFullYear()} New Heights. All rights
+              reserved.
+            </p>
+          </div> */}
         </div>
       </footer>
     </div>
