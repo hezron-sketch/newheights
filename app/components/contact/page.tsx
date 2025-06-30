@@ -908,12 +908,12 @@ export default function BrandPortfolioPage() {
           </div>
 
           {/* Copyright */}
-          {/* <div className="mt-8 pt-8 border-t border-gray-800 text-center">
+          <div className="mt-8 pt-8 border-t border-gray-800 text-center">
             <p className="text-gray-500 text-sm">
               &copy; {new Date().getFullYear()} New Heights. All rights
               reserved.
             </p>
-          </div> */}
+          </div>
         </div>
       </footer>
     </div>
