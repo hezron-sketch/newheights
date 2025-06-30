@@ -901,7 +901,7 @@ export default function BrandPortfolioPage() {
 
               {/* Contact Info */}
               <div className="text-center md:text-right">
-                <p className="text-gray-400 text-sm">new.heights@gmail.com</p>
+                <p className="text-gray-400 text-sm">hpaulhezne@gmail.com</p>
                 <p className="text-gray-400 text-sm">+2547 0706 9007</p>
               </div>
             </div>
