@@ -804,7 +804,7 @@ export default function BrandPortfolioPage() {
                 Prefer to talk directly?
               </p>
               <p className="font-bold text-base sm:text-lg">
-                new.heights@gmail.com
+                hpaulhezne@gmail.com
               </p>
               <p className="font-bold text-base sm:text-lg">+2547 0706 9007</p>
             </motion.div>
