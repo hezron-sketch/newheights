@@ -848,7 +848,7 @@ export default function BrandPortfolioPage() {
                   },
                   {
                     name: "Instagram",
-                    url: "https://instagram.com/tpharmacy001",
+                    url: "https://instagram.com/_new.heights_",
                     icon: (
                       <svg
                         className="w-5 h-5"
