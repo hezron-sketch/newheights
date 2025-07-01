@@ -593,7 +593,7 @@ export default function BrandPortfolioPage() {
                       src="/images/featured.jpg"
                       alt="Cosmetics"
                       fill
-                      className="object-cover rounded-xl sm:rounded-t-xl"
+                      className="object-cover rounded-t-xl sm:rounded-t-xl"
                     />
                   </div>
                 </div>
