@@ -199,7 +199,7 @@ export default function BrandPortfolioPage() {
       company: "Bloom Cosmetics",
       content:
         "New Heights completely transformed our brand identity. Their team delivered a stunning visual system that perfectly captures our essence and has increased our engagement by 200%.",
-      avatar: "/jpg",
+      avatar: "/images/jpg.jpg",
     },
     {
       id: 2,
@@ -207,7 +207,7 @@ export default function BrandPortfolioPage() {
       company: "TechNova",
       content:
         "The packaging design work exceeded our expectations. Not only is it beautiful, but it's also practical and has significantly boosted our shelf presence. Couldn't be happier!",
-      avatar: "/ava",
+      avatar: "/images/ava.jpg",
     },
     {
       id: 3,
@@ -215,7 +215,7 @@ export default function BrandPortfolioPage() {
       company: "GreenLife Organics",
       content:
         "Working with New Heights was a game-changer for our social media strategy. Their creative graphics and cohesive branding have helped us double our followers in just three months.",
-      avatar: "/avat",
+      avatar: "/images/avat.jpg",
     },
   ];
 
