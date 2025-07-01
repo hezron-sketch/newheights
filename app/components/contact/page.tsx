@@ -590,7 +590,7 @@ export default function BrandPortfolioPage() {
                 <div className="absolute inset-0 flex items-center justify-center sm:p-8">
                   <div className="relative w-full h-full">
                     <Image
-                      src="/featured.jpg"
+                      src="/images/featured.jpg"
                       alt="Cosmetics"
                       fill
                       className="object-cover rounded-xl sm:rounded-t-xl"
