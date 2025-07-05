@@ -1,29 +1,38 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Poppins, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
-// Import fonts
+
+const agrandir = localFont({
+  src: "../public/fonts/Agrandir-GrandHeavy.otf",
+  display: "swap", // Optional: Controls font display behavior
+});
+
+// Primary sans-serif font
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
-  weight: ["400", "500", "600", "700"], // Customize as needed
+  weight: ["400", "500", "600", "700"],
 });
 
-// const poppins = Poppins({
-//   subsets: ["latin"],
-//   variable: "--font-poppins",
-//   weight: "100",
-// });
+// Secondary sans-serif font
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600"],
+});
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-inter",
-//   weight: "500",
-// });
+// Serif font for headings and accents
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "New Heights Brands",
-  description: "Taking your brand to the new heights",
+  description: "Taking your brand to the New Heights",
 };
 
 export default function RootLayout({
@@ -34,9 +43,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable}`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable}`}
     >
-      <body className="font-sans">{children}</body>
+      <body className="font-sans bg-[#f8f8f2] text-gray-800">
+        {children}
+      </body>
     </html>
   );
 }

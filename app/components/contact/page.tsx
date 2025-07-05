@@ -414,6 +414,8 @@ export default function BrandPortfolioPage() {
           className="flex flex-col items-center gap-4 mt-4"
         >
           <motion.button
+            whileHover={{ scale: 1.05, boxShadow: "0 4px 24px 0 rgba(0,0,0,0.10)" }}
+            whileTap={{ scale: 0.97 }}
             onClick={animateToContact}
             className="inline-block rounded-full bg-black text-white font-bold px-6 py-2 sm:px-8 sm:py-3 shadow-lg text-base sm:text-lg"
           >
