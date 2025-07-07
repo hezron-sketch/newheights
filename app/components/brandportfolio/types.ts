@@ -4,6 +4,7 @@ export interface NavItem {
 }
 
 export interface PortfolioItem {
+  [x: string]: any;
   id: number;
   title: string;
   description: string;
@@ -24,3 +25,4 @@ export interface FormData {
   email: string;
   message: string;
 }
+

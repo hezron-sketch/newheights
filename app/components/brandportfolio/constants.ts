@@ -76,7 +76,7 @@ export const portfolioItems: PortfolioItem[] = [
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Sarah Johnson",
+    name: "Mercy Wairimu",
     company: "Bloom Cosmetics",
     content:
       "New Heights completely transformed our brand identity. Their team delivered a stunning visual system that perfectly captures our essence and has increased our engagement by 200%.",
@@ -84,7 +84,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    name: "Michael Torres",
+    name: "Fred Omollo",
     company: "TechNova",
     content:
       "The packaging design work exceeded our expectations. Not only is it beautiful, but it's also practical and has significantly boosted our shelf presence. Couldn't be happier!",
@@ -92,7 +92,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 3,
-    name: "Emma Richardson",
+    name: "Elizabeth Kinya",
     company: "GreenLife Organics",
     content:
       "Working with New Heights was a game-changer for our social media strategy. Their creative graphics and cohesive branding have helped us double our followers in just three months.",
