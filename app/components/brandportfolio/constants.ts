@@ -7,71 +7,7 @@ export const navItems: NavItem[] = [
   { id: "contact", label: "Contact" },
 ];
 
-export const portfolioItems: PortfolioItem[] = [
-  {
-    id: 1,
-    title: "Bloom Cosmetics Rebrand",
-    description: "Complete brand identity refresh",
-    category: "Branding",
-    imageUrl: "/images/cosmetics-brand.jpg",
-  },
-  {
-    id: 2,
-    title: "Organic Tea Packaging",
-    description: "Sustainable packaging design",
-    category: "Packaging",
-    imageUrl: "/images/tea-packaging.jpg",
-  },
-  {
-    id: 3,
-    title: "Tech Startup Website",
-    description: "Modern web design & development",
-    category: "Digital",
-    imageUrl: "/images/tech-website.jpg",
-  },
-  {
-    id: 4,
-    title: "Coffee Brand Identity",
-    description: "From logo to packaging system",
-    category: "Branding",
-    imageUrl: "/images/coffee-branding.jpg",
-  },
-  {
-    id: 5,
-    title: "Fashion Lookbook",
-    description: "Editorial design & photography",
-    category: "Print",
-    imageUrl: "/images/fashion-lookbook.jpg",
-  },
-  {
-    id: 6,
-    title: "Restaurant Menu Design",
-    description: "Culinary branding experience",
-    category: "Print",
-    imageUrl: "/images/restaurant-menu.jpg",
-  },
-  {
-    id: 7,
-    title: "Mobile Banking App",
-    description: "UI/UX design for fintech",
-    category: "Digital",
-    imageUrl: "/images/mobile-app.jpg",
-  },
-  {
-    id: 8,
-    title: "Wine Label Collection",
-    description: "Premium packaging design",
-    category: "Packaging",
-    imageUrl: "/images/wine-labels.jpg",
-  },
-  {
-    id: 9,
-    title: "Corporate Brand System",
-    description: "Complete visual identity",
-    category: "Branding",
-    imageUrl: "/images/corporate-brand.jpg",
-  },
-];
+
 
 export const testimonials: Testimonial[] = [
   {
@@ -100,4 +36,59 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
-export const categories = ["All", "Branding", "Packaging", "Digital", "Print"];
+
+
+export const portfolioItems: PortfolioItem[] = [
+  {
+    id: 1,
+    title: "Nova SaaS Dashboard",
+    category: "SaaS",
+    imageUrl: "/images/saas-dashboard.png",
+    description: "Clean analytics interface for financial data visualization",
+  },
+  {
+    id: 2,
+    title: "Lumina Mobile App",
+    category: "Mobile",
+    imageUrl: "/images/mobile-app.jpg",
+    description: "Fitness tracking with minimalist user experience",
+  },
+  {
+    id: 3,
+    title: "Aether Design System",
+    category: "Design",
+    imageUrl: "/images/design-system.png",
+    description: "Component library for consistent digital products",
+  },
+  {
+    id: 4,
+    title: "Edge Commerce API",
+    category: "Development",
+    imageUrl: "/images/api-code.png",
+    description: "High-performance e-commerce backend solution",
+  },
+  {
+    id: 5,
+    title: "Polaris Brand Identity",
+    category: "Branding",
+    imageUrl: "/images/tech-startup.jpg",
+    description: "Visual language for tech startup",
+  },
+  {
+    id: 6,
+    title: "Horizon Web Platform",
+    category: "Web",
+    imageUrl: "/images/dashb.jpeg",
+    description: "Content management with intuitive admin",
+  },
+];
+
+export const categories = [
+  "All",
+  "SaaS",
+  "Mobile",
+  "Web",
+  "Design",
+  "Branding",
+  "Development",
+];
