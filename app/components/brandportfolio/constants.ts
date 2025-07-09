@@ -48,10 +48,10 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 2,
-    title: "Lumina Mobile App",
-    category: "Mobile",
-    imageUrl: "/images/mobile-app.jpg",
-    description: "Fitness tracking with minimalist user experience",
+    title: "Green Tea",
+    category: "Branding",
+    imageUrl: "/images/tea-packaging.jpg",
+    description: "Beverage products branding",
   },
   {
     id: 3,

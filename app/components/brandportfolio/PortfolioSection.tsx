@@ -162,7 +162,7 @@ export default function PortfolioSection({
           whileInView={{ opacity: 1 }}
         >
           {/* Content */}
-          <div className="flex flex-col lg:flex-row bg-gradient-to-r from-blue-200/50 to-blue-500/80">
+          <div className="flex flex-col lg:flex-row bg-gradient-to-r from-green-200/50 to-green-800/80">
             <div className="p-8 md:p-12 lg:w-1/2">
               <div className="flex items-center mb-4">
                 <div className="w-5 h-5 rounded-full bg-[#e4c444] mr-3"></div>
@@ -171,16 +171,15 @@ export default function PortfolioSection({
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-medium text-gray-900 mb-4">
-                Nova SaaS Platform
+                Alure Cosmetics
               </h3>
               <p className="text-gray-500 mb-6 leading-relaxed">
-                Enterprise dashboard that reduced user onboarding time by 65%
-                through intuitive design.
+                Branded products increasing sales and awareness by 65%
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {[
-                  { value: "65%", label: "Onboarding" },
-                  { value: "3.2x", label: "Engagement" },
+                  { value: "65%", label: "Product sales" },
+                  { value: "3.2x", label: "Awareness" },
                   { value: "12", label: "Modules" },
                   { value: "9", label: "Months" },
                 ].map((stat, i) => (
@@ -197,7 +196,7 @@ export default function PortfolioSection({
                 ))}
               </div>
               <motion.button
-                className="bg-blue-900 text-white px-6 py-3 rounded-xl text-sm font-medium"
+                className="bg-green-900 text-white px-6 py-3 rounded-xl text-sm font-medium"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -206,7 +205,7 @@ export default function PortfolioSection({
             </div>
             <div className="lg:w-1/2 relative min-h-[400px]">
               <Image
-                src="/images/saas-dashboard.png"
+                src="/images/featured.jpg"
                 alt="Nova SaaS Platform"
                 fill
                 className="object-cover rounded-xl-r"
