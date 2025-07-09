@@ -81,8 +81,7 @@ export default function HeroSection({
           transition={{ duration: 0.7, delay: 0.4 }}
           className={`${inter.className} text-base sm:text-lg text-center text-gray-500 max-w-2xl leading-relaxed font-light`}
         >
-          We create purposeful digital experiences that transform ideas into
-          experiences we can interact with.
+          We create purposeful digital experiences that transform lives and businesses.
         </motion.p>
       </motion.header>
 
