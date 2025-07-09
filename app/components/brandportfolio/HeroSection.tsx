@@ -48,7 +48,7 @@ export default function HeroSection({
     {
       id: 4,
       title: "Visual Design",
-      description: "Minimalist aesthetics for brand identity",
+      description: "Visual aesthetics for brand identity",
       icon: "/icons/design.svg",
     },
   ];
